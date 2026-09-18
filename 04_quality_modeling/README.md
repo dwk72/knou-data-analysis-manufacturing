@@ -1,54 +1,67 @@
 # 04. Quality Modeling
 
-## Academic Foundation
+## 이 프로젝트에서 한 일
 
-KNOU 데이터마이닝 과제에서 범주형 목표변수인 와인 품질 데이터를 이용해 선형회귀와 로지스틱 회귀를 비교하고, 단계적 변수선택과 모델 평가를 수행했습니다.
+KNOU 데이터마이닝 과제에서 와인 품질 데이터를 이용해 **여러 특성값으로 품질 결과를 설명하고 분류하는 방법**을 비교했습니다.
 
-### Linear Regression
+핵심은 어떤 변수가 결과와 관련되는지 확인하고, 품질 결과를 예측했을 때 어느 정도 맞는지 평가하는 것입니다.
+
+### 1. 선형회귀
+
+여러 입력변수와 품질 결과의 관계를 하나의 식으로 표현했습니다.
+
+수행 내용:
 - 전체 입력변수로 회귀모형 적합
-- `step()`을 이용한 단계적 변수선택
-- 선택된 변수의 회귀계수 방향 해석
-- 예측값 생성
-- MSE / MAE 확인
+- 단계적 변수선택으로 불필요한 변수 제거
+- 회귀계수 방향 해석
+- 예측값 계산
+- MSE / MAE로 오차 확인
 
-### Logistic Regression
-- 이항형 목표변수에 `glm(..., family = binomial)` 적용
-- 단계적 변수선택
-- 확률 예측
-- cutoff 0.5로 class 결정
-- Confusion Matrix
-- Accuracy / Sensitivity / Specificity 확인
+### 2. 로지스틱 회귀
 
-과제 결과에서 로지스틱 회귀의 예측 정확도는 75.1%, 민감도는 76.7%, 특이도는 73.2%였습니다.
+품질 결과가 두 범주로 나뉘는 상황에 맞춰 로지스틱 회귀를 적용했습니다.
 
-### CART
-- 범주형 분할 후보별 Gini index 계산
-- Gini index가 최소인 분할집합 선택
+수행 내용:
+- 품질 결과를 확률로 예측
+- cutoff 0.5를 기준으로 두 집단 분류
+- 실제 결과와 예측 결과 비교
+- Accuracy / Sensitivity / Specificity 계산
+
+과제 결과:
+- 정확도: 75.1%
+- 민감도: 76.7%
+- 특이도: 73.2%
 
 정리된 R 코드는 [wine_quality_models.R](./wine_quality_models.R)에 있습니다.
 
-## Skills Demonstrated
+### 3. CART 분할 기준
 
-`R` · `Linear Regression` · `Logistic Regression` · `Stepwise Selection` · `Confusion Matrix` · `CART` · `Gini Index`
+의사결정나무에서 데이터를 어느 기준으로 나누는 것이 좋은지 확인하기 위해 Gini index를 직접 계산했습니다.
 
-## Manufacturing Relevance — Planned
+## 사용 기술
 
-현재 대상 데이터는 와인 품질이며 제조공정 데이터가 아닙니다. 이후에는 동일한 문제구조를 다음과 같이 바꿀 계획입니다.
+`R` · `Linear Regression` · `Logistic Regression` · `Stepwise Selection` · `Confusion Matrix` · `CART`
+
+## 제조업과의 연결 방향
+
+현재 데이터는 와인 품질이며 제조공정 데이터는 아닙니다. 하지만 문제의 구조는 제조 품질 문제와 유사합니다.
 
 ```text
-Process Conditions
-       ↓
-Quality Result
-       ↓
-Regression / Classification
-       ↓
-Candidate Variables for Engineering Review
+공정조건
+   ↓
+품질결과
+   ↓
+변수 관계 분석
+   ↓
+품질 분류 / 예측
+   ↓
+현장 검증이 필요한 후보 변수 선정
 ```
 
-예정 적용:
-- 공정조건 → OK / NG 분류
-- 품질특성 예측
-- 중요 변수 후보 확인
-- 통계적 결과와 공정 엔지니어링 해석의 분리
+향후에는 합성 제조 데이터를 사용해 다음 문제로 확장할 예정입니다.
 
-이 단계에서는 상관·예측 결과를 원인으로 단정하지 않고, 후속 현장검증이 필요한 후보 변수로 해석하는 것을 원칙으로 합니다.
+- 공정조건에 따른 OK / NG 분류
+- 품질값 예측
+- 품질과 관련성이 높은 변수 후보 확인
+
+분석 결과만으로 원인을 확정하지 않고, **후속 공정 검증이 필요한 후보를 좁히는 도구**로 사용하는 것을 원칙으로 합니다.
