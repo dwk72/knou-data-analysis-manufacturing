@@ -1,42 +1,46 @@
 # 05. ML / DL Foundations
 
-## Academic Foundation
+## 이 프로젝트에서 한 일
 
-KNOU 머신러닝 및 딥러닝 관련 과제에서 모델 구조와 학습 설정을 변경하고 결과를 비교하는 실습을 수행했습니다.
+KNOU 머신러닝·딥러닝 과제에서 신경망 모델의 구조와 학습조건을 직접 바꾸고 결과를 비교했습니다.
 
-### PyTorch MNIST Experiment
+목적은 모델을 단순 실행하는 것이 아니라, **구조와 학습조건을 바꾸면 결과가 어떻게 달라지는지 이해하는 것**이었습니다.
+
+### PyTorch MNIST 실험
+
+MNIST는 손글씨 숫자 이미지를 분류하는 대표적인 학습용 데이터셋입니다.
+
 과제에서 수행한 변경:
-- 512차원 → 10차원 구조 사이에 256차원 hidden layer 추가
-- hidden layer 뒤 ReLU 적용
-- optimizer를 SGD에서 Adam으로 변경
-- learning rate를 0.01에서 0.001로 변경
-- 분류문제에 `CrossEntropyLoss` 유지
-- 변경 후 Test 결과 비교
+- 기존 신경망에 256차원 은닉층 추가
+- ReLU 활성화함수 추가
+- 학습 알고리즘을 SGD에서 Adam으로 변경
+- Learning rate를 0.01에서 0.001로 변경
+- 분류문제에 적합한 `CrossEntropyLoss` 사용
+- 변경 후 성능 비교
 
-이 실습의 핵심은 단순히 모델을 실행하는 것이 아니라 **구조·optimizer·learning rate 변경이 학습에 미치는 영향을 비교하는 것**이었습니다.
+### TensorFlow / 신경망 학습
 
-### TensorFlow / Neural Network Study
-딥러닝 과제에서는 다음 내용을 학습했습니다.
-- Perceptron / MLP
-- Forward propagation
-- Backpropagation
-- Loss function
-- Gradient-based optimization
-- `tf.GradientTape` 기반 자동미분 개념
-- 신경망 하이퍼파라미터 비교
+다음 내용을 학습했습니다.
 
-## Skills Demonstrated
+- 입력값이 모델을 통과하는 순전파
+- 예측오차를 계산하는 손실함수
+- 오차를 반대로 전달하는 역전파
+- 가중치를 수정하는 최적화 과정
+- `tf.GradientTape`를 이용한 자동미분
+- 하이퍼파라미터 변경에 따른 결과 비교
+
+## 사용 기술
 
 `PyTorch` · `TensorFlow` · `MNIST` · `ReLU` · `Adam` · `Learning Rate` · `CrossEntropyLoss`
 
-## Manufacturing Relevance — Planned
+## 제조업과의 연결 방향
 
-현재 ML/DL 실습은 제조 데이터를 사용하지 않았습니다. 제조 확장은 EDA·통계분석 이후 필요한 경우에만 진행할 계획입니다.
+현재 ML/DL 과제는 제조 데이터를 사용하지 않았습니다.
 
-예정 적용 후보:
+향후 적용 가능성이 있는 영역:
 - 품질 분류
-- 이상 상태 분류
+- 이상상태 분류
 - 이미지 기반 결함 탐지
-- 예지보전 / 이상감지
+- 설비 이상감지
 
-이 저장소에서는 **ML/DL 자체보다 제조문제 정의와 데이터 품질, EDA, 통계적 해석을 우선**합니다.
+다만 이 저장소에서는 모델을 복잡하게 만드는 것보다 **문제 정의 → 데이터 정리 → EDA → 통계적 해석**을 먼저 수행하고, 필요한 경우에만 ML/DL로 확장하는 순서를 유지합니다.
