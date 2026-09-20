@@ -29,3 +29,6 @@ Thumbs.db
 # Secrets
 .env
 *.key
+
+# Keep the small synthetic manufacturing dataset in the portfolio
+!07_manufacturing_extension/data/*.csv
