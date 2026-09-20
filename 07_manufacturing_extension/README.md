@@ -224,7 +224,7 @@ PCA 등을 이용해 여러 공정변수를 동시에 봅니다.
 - [x] 초기 가설 설정
 - [x] 데이터 테이블 구조 설계
 - [x] 분석 순서 설계
-- [ ] Synthetic 데이터 생성
+- [x] Synthetic 데이터 생성
 - [ ] Python 데이터 통합
 - [ ] SQL Query 작성
 - [ ] EDA
@@ -234,4 +234,4 @@ PCA 등을 이용해 여러 공정변수를 동시에 봅니다.
 - [ ] Validation
 - [ ] Manufacturing Action 정리
 
-데이터 생성 원칙은 [GENERATION_RULES.md](./GENERATION_RULES.md)에 정리합니다.
+데이터 생성 원칙은 [GENERATION_RULES.md](./GENERATION_RULES.md), 실제 생성 결과는 [data](./data/), 데이터 검증 요약은 [VALIDATION_SUMMARY.md](./VALIDATION_SUMMARY.md)에 정리합니다.
