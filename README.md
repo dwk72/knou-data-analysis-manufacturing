@@ -23,6 +23,7 @@
 | [04. Quality Modeling](./04_quality_modeling/) | 품질 결과를 설명·분류하는 모델 비교 | R, 회귀, 로지스틱 회귀, CART | 품질 영향인자 탐색·OK/NG 분류 |
 | [05. ML/DL Foundations](./05_ml_dl_foundations/) | 신경망 구조와 학습조건 변경 실험 | PyTorch, TensorFlow | 품질예측·비전·이상감지로 확장 |
 | [06. Database Foundations](./06_database_foundations/) | 데이터베이스 구조 설계의 기초 학습 | DBMS, ERD | Batch/LOT–Process–Quality 데이터 구조 설계 |
+| [07. Manufacturing Extension](./07_manufacturing_extension/) | 합성 Batch 공정 Case 설계 및 분석계획 | Python, R, SQL, 통계 | 기존 학업기반을 하나의 생산기술 문제에 통합 |
 
 ## 현재까지 확인 가능한 역량
 
@@ -93,6 +94,7 @@
 - [x] R 품질모델링 학업 기반
 - [x] ML/DL 학습 및 모델 변경 실험
 - [x] DBMS / ER 모델링 기초
+- [x] 제조 확장 Case / 데이터 구조 설계
 - [ ] 제조용 합성 데이터셋
 - [ ] 제조 EDA 확장
 - [ ] 공정 시계열 확장
