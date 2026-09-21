@@ -32,3 +32,5 @@ Thumbs.db
 
 # Keep the small synthetic manufacturing dataset in the portfolio
 !07_manufacturing_extension/data/*.csv
+
+!07_manufacturing_extension/01_data_integration/output/*.csv
