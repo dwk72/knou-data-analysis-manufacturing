@@ -1,0 +1,10 @@
+metric,value,meaning
+integrated_rows,800,4개 원본 테이블을 batch_id 기준으로 통합한 행 수
+integrated_source_columns,19,데이터 품질 플래그를 제외한 원본 변수 수
+missing_cells,25,핵심 분석변수에서 확인된 전체 결측 셀 수
+rows_with_missing,24,결측치가 1개 이상 있는 Batch 수
+complete_case_rows,776,핵심 분석변수에 결측치가 없는 Batch 수
+rows_with_iqr_outlier,61,IQR 기준 통계적 이상치가 1개 이상 있는 Batch 수
+rows_flagged_for_review,83,결측 또는 IQR 이상치 때문에 REVIEW로 표시된 Batch 수
+quality_OK,650,OK Batch 수
+quality_NG,150,NG Batch 수
