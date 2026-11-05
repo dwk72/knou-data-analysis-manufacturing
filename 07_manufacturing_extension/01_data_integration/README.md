@@ -1,6 +1,6 @@
 # 01. Data Integration & Quality Check
 
-> 재현성 검증 완료 (2026-11-05): GitHub Actions의 Python 3.11 / pandas 2.2.3에서 생성 코드와 통합 코드를 새 환경으로 재실행하여 원본 4개·결과 4개 CSV 비교, 품질지표, Batch ID 검사를 수행했습니다. 4개 자동 테스트 모두 통과했습니다. [검증 보고서](./REPRODUCIBILITY_VALIDATION_2026-11-05.md) · [실제 실행 로그](https://github.com/dwk72/knou-data-analysis-manufacturing/actions/runs/41981724270)
+> 재현성 검증 완료: GitHub Actions의 Python 3.11 / pandas 2.2.3에서 생성 코드와 통합 코드를 새 환경으로 재실행하여 원본 4개·결과 4개 CSV 비교, 품질지표, Batch ID 검사를 수행했습니다. 4개 자동 테스트 모두 통과했습니다. [검증 보고서](./REPRODUCIBILITY_VALIDATION_2026-11-05.md) · [실제 실행 로그](https://github.com/dwk72/knou-data-analysis-manufacturing/actions/runs/41981724270)
 
 
 ## 왜 먼저 데이터를 통합하는가
