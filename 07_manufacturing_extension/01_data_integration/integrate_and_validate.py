@@ -254,17 +254,27 @@ pd.DataFrame(outlier_summary).to_csv(
     encoding="utf-8-sig",
 )
 
+# 원본 데이터 열 수는 추가한 품질 플래그 3개를 제외해 계산합니다.
+source_column_count = len(integrated_master.columns) - len(
+    ("dq_missing_count", "dq_outlier_count", "dq_review_flag")
+)
+
 summary = pd.DataFrame(
     [
         {
             "metric": "integrated_rows",
             "value": len(integrated_master),
-            "meaning": "4개 원본 테이블 통합 후 Batch 수",
+            "meaning": "4개 원본 테이블을 batch_id 기준으로 통합한 행 수",
+        },
+        {
+            "metric": "integrated_source_columns",
+            "value": source_column_count,
+            "meaning": "데이터 품질 플래그를 제외한 원본 변수 수",
         },
         {
             "metric": "missing_cells",
             "value": int(integrated_master[ANALYSIS_COLUMNS].isna().sum().sum()),
-            "meaning": "핵심 분석변수의 전체 결측 셀 수",
+            "meaning": "핵심 분석변수에서 확인된 전체 결측 셀 수",
         },
         {
             "metric": "rows_with_missing",
@@ -279,12 +289,22 @@ summary = pd.DataFrame(
         {
             "metric": "rows_with_iqr_outlier",
             "value": int((integrated_master["dq_outlier_count"] > 0).sum()),
-            "meaning": "IQR 기준 이상치 후보가 있는 Batch 수",
+            "meaning": "IQR 기준 통계적 이상치가 1개 이상 있는 Batch 수",
         },
         {
             "metric": "rows_flagged_for_review",
             "value": int((integrated_master["dq_review_flag"] == "REVIEW").sum()),
-            "meaning": "결측 또는 이상치 때문에 검토가 필요한 Batch 수",
+            "meaning": "결측 또는 IQR 이상치 때문에 REVIEW로 표시된 Batch 수",
+        },
+        {
+            "metric": "quality_OK",
+            "value": int((integrated_master["quality_flag"] == "OK").sum()),
+            "meaning": "OK Batch 수",
+        },
+        {
+            "metric": "quality_NG",
+            "value": int((integrated_master["quality_flag"] == "NG").sum()),
+            "meaning": "NG Batch 수",
         },
     ]
 )
