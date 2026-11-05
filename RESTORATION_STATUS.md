@@ -12,7 +12,7 @@
 | 04 회귀·데이터마이닝 | 회귀모형·데이터마이닝 제출 DOCX | 기존 wine_quality_models.R, 추가 mtcars_regression_reconstructed.R | 와인 데이터 원본 없음; mtcars는 R 내장 데이터. 이 환경에는 R 실행기가 없어 새 R 파일 미검증 |
 | 05 머신러닝·딥러닝 | 머신러닝 PDF의 코드 캡처, 딥러닝 제출 DOCX | mnist_reconstructed.py 추가 | 코드 캡처에서 MNIST 네트워크 구조를 재구성. 모델 forward/1 step 오프라인 점검 통과. 실제 MNIST 10 epoch 재학습은 미수행 |
 | 06 데이터베이스 | 데이터베이스시스템 제출 DOCX의 개념 설명·그림 | README 기존 | 원본 SQL 실행 스크립트가 확인되지 않아 새로운 구현을 완료 사실처럼 만들지 않음 |
-| 07 제조 확장 | 공개 합성 제조 Batch 프로젝트 | 생성 Python, 통합·품질검증 Python, 원본 CSV 4개, 출력 CSV 4개 기존 보존 | 데이터 품질 리포트 확인. 독립 환경 E2E 실행 및 테스트 스위트는 아직 검증하지 않음 |
+| 07 제조 확장 | 공개 합성 제조 Batch 프로젝트 | 생성·통합·품질검증 Python, 원본 CSV 4개·출력 CSV 4개, 시각화 SVG 3개 | GitHub Actions에서 독립 환경 재실행·CSV 비교 4개 테스트 통과, 시각화 재생성 검증 완료. 실제 공정 데이터 검증은 수행하지 않음 |
 
 ## 표현 규칙
 
