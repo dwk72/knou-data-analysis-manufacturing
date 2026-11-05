@@ -1,4 +1,4 @@
-> 복원 현황 (2026-11-05): 제출한 머신러닝 과제 PDF에서 MNIST PyTorch 코드 캡처를 확인했습니다. 이를 토대로 [mnist_reconstructed.py](./mnist_reconstructed.py)를 다시 작성했습니다. 전체 원본 노트북을 확보한 것은 아니므로 정확한 원본 코드와 동일하다고 주장하지 않습니다.
+> 제출 과제와 공개 코드의 관계: 제출한 머신러닝 과제 PDF에서 MNIST PyTorch 코드 캡처를 확인했습니다. 이를 토대로 [mnist_reconstructed.py](./mnist_reconstructed.py)를 다시 작성했습니다. 전체 원본 노트북을 확보한 것은 아니므로 정확한 원본 코드와 동일하다고 주장하지 않습니다.
 
 - 제출 과제에서 확인한 구조: 784→512→256→10, ReLU, Adam, 학습률 0.001, CrossEntropyLoss, 10 epochs
 - 새 코드는 PyTorch 2.10.0 환경에서 합성 이미지 8개를 이용한 1회 학습 업데이트 및 출력 차원 확인을 통과했습니다.
