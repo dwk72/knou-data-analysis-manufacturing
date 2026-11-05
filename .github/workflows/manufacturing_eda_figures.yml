@@ -1,0 +1,41 @@
+name: Publish synthetic manufacturing EDA figures
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "07_manufacturing_extension/02_eda/render_charts.js"
+      - "07_manufacturing_extension/01_data_integration/output/integrated_master.csv"
+      - ".github/workflows/manufacturing_eda_figures.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate-figures:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Generate synthetic dataset figures
+        run: node 07_manufacturing_extension/02_eda/render_charts.js
+      - name: Verify figures match the source and data
+        run: node 07_manufacturing_extension/02_eda/render_charts.js --check
+      - name: Publish generated SVG figures only when changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 07_manufacturing_extension/02_eda/figures/*.svg
+          if git diff --cached --quiet; then
+            echo "Generated figures match published figures."
+          else
+            git commit -m "Publish reproducible manufacturing batch EDA SVG figures"
+            git push
+          fi
