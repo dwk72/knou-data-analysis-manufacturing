@@ -18,11 +18,13 @@
 - 여러 기간의 데이터 통합
 - CSV 저장
 
+완료한 제조 확장:
+- [x] 합성 `batch_id` 제조 데이터 800개 생성
+- [x] Material / Process / Batch / Quality 데이터 분리
+- [x] Python으로 분석용 데이터 통합 및 품질점검
+
 다음 단계:
-- 합성 `lot_id` / `batch_id` 제조 데이터 생성
-- Material / Process / Equipment / Quality 데이터 분리
-- Python으로 분석용 데이터 통합
-- SQL로 공정·품질 데이터 연결
+- [ ] SQL로 공정·품질 데이터 연결
 
 ## 2. 다변량 공정분석
 
