@@ -1,3 +1,21 @@
+> 복원 현황 (2026-11-05): 기존 제출 DOCX에서 분석 방법과 일부 R 코드 조각을 확인했습니다. 원본 과제의 입력 CSV는 이 저장소에 없으므로 아래의 원래 과제 결과는 현재 GitHub에서 재현되지 않습니다. 코드의 출처와 실습용 재구성을 구별합니다.
+
+## 복원한 코드
+
+- [coursework_methods.R](./coursework_methods.R): 제출 과제의 산점도·상관행렬, PCA, 인자분석 기법을 토대로 재구성한 R 코드. 원본 실습 CSV가 있어야 실행하며, 원본 소스 파일과 완전히 동일하다고 주장하지 않습니다. R 실행 검증은 미수행입니다.
+- [multivariate_demo.py](./multivariate_demo.py): Iris 공개 예제 데이터로 동일 기법을 시연하는 독립적 재구현. 실제 과제 데이터와 수치는 다릅니다.
+
+Python 예제 실행 (Python 3, numpy/pandas/scikit-learn 설치 필요):
+
+~~~bash
+pip install -r 02_multivariate_analysis/requirements.txt
+python 02_multivariate_analysis/multivariate_demo.py
+~~~
+
+로컬 실행 검증: Iris 150행·수치형 4변수, PC1+PC2 누적 설명분산 약 95.81%. 출력은 실행 시 output/ 폴더의 CSV 4개와 REPORT.md로 생성됩니다.
+
+---
+
 # 02. Multivariate Analysis
 
 ## 이 프로젝트에서 한 일
