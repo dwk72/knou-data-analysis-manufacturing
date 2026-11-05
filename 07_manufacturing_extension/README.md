@@ -1,238 +1,141 @@
-# 07. Manufacturing Extension
+# 제조 Batch 데이터 통합·품질검증 자동화
 
-## 프로젝트 목적
+Python · Pandas · Data Quality · Batch Manufacturing · Reproducibility
 
-앞선 학업 프로젝트에서 사용한 Python, R, 통계분석, 머신러닝, 데이터베이스 개념을 하나의 제조 문제에 연결합니다.
+> 개인 포트폴리오 | 합성(Synthetic) 데이터 기반 | 데이터 통합·품질점검·기초 시각화 완료
+>
+> 이 저장소의 수치는 실제 화학공장이나 배터리 소재 생산라인에서 수집한 것이 아닙니다. 설정한 수식과 난수를 이용해 생성한 학습용 데이터이며, 실공정 개선 성과나 불량 원인 규명 결과로 제시하지 않습니다.
 
-이번 확장에서는 실제 회사 데이터를 사용하지 않고, **배터리 소재·화학 Batch 공정을 단순화한 합성(Synthetic) 데이터**를 사용합니다.
+## 1. 프로젝트 개요
 
-핵심 질문은 다음과 같습니다.
+화학·배터리 소재의 Batch 제조에서 생산이력, 원료 LOT, 공정조건, 품질검사 결과가 서로 다른 테이블에 저장된 상황을 가정했습니다. 동일한 Batch의 기록을 정확히 연결하지 못하면 공정변수와 품질 간의 관계를 분석할 수 없습니다.
 
-> Batch 간 품질 편차와 수율 변동이 커졌을 때, 여러 공정·원료·설비 데이터에서 어떤 항목을 먼저 확인해야 하는가?
+이 프로젝트는 복잡한 예측모델보다 그 이전 단계인 **데이터 연결의 신뢰성, 결측·이상값 확인, 재현 가능한 분석 입력 생성**에 초점을 맞췄습니다.
 
-목표는 불량 원인을 자동으로 확정하는 것이 아니라, **현장 엔지니어가 우선 확인할 후보를 데이터로 좁히는 것**입니다.
+| 항목 | 구현 및 검증 결과 |
+|---|---|
+| 분석 단위 | Batch 800개, 원본 테이블 4개 |
+| 데이터 구조 | 생산·원료·공정조건·품질 데이터, 원본 변수 총 19개 |
+| 데이터 통합 | `batch_id` 기준 1:1 결합, 중복·연결 누락 검토 |
+| 데이터 품질 | 결측 셀 25개(24 Batch), IQR 이상치 후보 61 Batch |
+| 검토 대상 | REVIEW 83 Batch, PASS 717 Batch |
+| 분석용 출력 | 전체 800 Batch 보존 + 결측 없는 776 Batch 별도 생성 |
+| 시각화 | 반응시간 변화, 에너지 원단위 변화, 검토 대상 분류 |
+| 재현성 검증 | GitHub Actions에서 생성·통합 결과 8개 CSV 비교, 테스트 4/4 통과 |
 
----
+[통합·품질검증 코드와 상세 보고서](./01_data_integration/) · [시각화 코드 및 해석](./02_eda/) · [자동 재현성 검증 결과](./01_data_integration/REPRODUCIBILITY_VALIDATION_2026-11-05.md)
 
-## 1. Problem
-
-Batch 생산공정에서 최근 품질 편차와 수율 변동이 증가했다고 가정합니다.
-
-생산 데이터는 한곳에 모여 있지 않고 다음처럼 여러 영역에 나뉘어 있다고 봅니다.
-
-- Batch 기본정보
-- 원료 LOT 정보
-- 공정조건
-- 설비 정보
-- 품질검사 결과
-
-따라서 첫 단계는 이 데이터를 Batch 기준으로 연결해 분석 가능한 형태로 만드는 것입니다.
-
----
-
-## 2. Process Context
-
-이 프로젝트는 특정 회사나 실제 공정을 재현하지 않습니다.
-
-다만 배터리 소재·화학 제조에서 일반적으로 볼 수 있는 다음 구조를 단순화해 사용합니다.
+## 2. 데이터 구조와 처리 과정
 
 ```text
-Raw Material
-     ↓
-Batch Production
-     ↓
-Process Conditions
-     ↓
-Intermediate Quality
-     ↓
-Final Quality / Yield
+[합성 데이터 생성: 800 Batch]
+                │
+      ┌─────────┼───────────┬──────────────┐
+      ▼         ▼           ▼              ▼
+  batch_master  material    process_condition  quality_result
+      └─────────┴───────────┴──────────────┘
+                │
+       batch_id 기준 1:1 결합
+                │
+        중복·누락·타입 점검
+                │
+      결측 / IQR 이상치 표시
+                │
+       ┌────────┴─────────┐
+       ▼                  ▼
+  전체 통합본(800)    결측 없는 분석본(776)
+       │
+       └── 품질 요약 + 기초 EDA 시각화
 ```
 
-분석 대상은 특정 장치의 상세 설계보다 **Batch별 공정조건과 품질결과의 관계**입니다.
+- [데이터 생성 코드](./generate_synthetic_data.py): 원료 LOT 효과, 설비 차이, 시간에 따른 Drift, 품질판정 확률, 소량의 결측·극단값을 의도적으로 설정합니다. 난수 시드는 42입니다.
+- [원본 데이터 4개](./data/): 원본은 모두 공개 가능한 합성 CSV입니다.
+- [통합·검증 코드](./01_data_integration/integrate_and_validate.py): Pandas `merge(..., validate="one_to_one")`으로 Batch 단위 결합을 검증합니다.
+- [통합 데이터·품질 보고서](./01_data_integration/output/): 결과 CSV 4개와 [품질검증 보고서](./01_data_integration/DATA_QUALITY_REPORT.md)를 공개합니다.
 
----
+## 3. 데이터 품질 검증 결과
 
-## 3. Initial Hypotheses
+![800개 합성 Batch의 데이터 품질 검토 대상](./02_eda/figures/data_quality_review.svg)
 
-분석을 시작하기 전에 다음과 같은 가설을 설정합니다.
+| 구분 | Batch 수 | 엔지니어링 해석 |
+|---|---:|---|
+| PASS | 717 | 적용한 결측·IQR 검토 기준 통과 |
+| 결측만 존재 | 22 | 센서·시험 기록 등 누락 여부 확인 후보 |
+| IQR 이상치 후보만 존재 | 59 | 측정 오류인지 실제 변동인지 추가 확인 필요 |
+| 결측과 이상치 후보 모두 | 2 | 두 종류의 검토 필요 |
+| 합계 | 800 | REVIEW 83 Batch |
 
-1. 특정 원료 LOT에서 품질 편차가 커질 수 있다.
-2. 일부 설비에서 공정값이 일정하게 치우칠 수 있다.
-3. 반응시간·온도·압력 등 공정변수의 조합이 품질과 관련될 수 있다.
-4. 시간이 지나면서 특정 변수에 Drift가 발생할 수 있다.
-5. 단일 변수보다 여러 변수의 조합이 이상 Batch를 더 잘 설명할 수 있다.
+IQR(사분위범위) 경계는 `Q1 - 1.5 × IQR`부터 `Q3 + 1.5 × IQR`까지입니다. 이 범위를 벗어나는 관측값을 자동 삭제하지 않고 **검토 플래그**로 남깁니다. 데이터 품질 REVIEW는 제품 품질 NG와 다릅니다.
 
-이 가설들은 정답이 아니라 **분석 순서를 정하기 위한 출발점**입니다.
+개별 Batch에서 12개 핵심 수치형 변수의 결측값을 확인하고, 결측값이 없는 776개 Batch의 분석용 복사본을 별도로 만들었습니다. 전체 800개 Batch를 유지한 원본 통합본도 보존했습니다.
 
----
+## 4. 기초 시각화: 의도적으로 삽입한 추세
 
-## 4. Data Structure
+합성 데이터 생성 코드에서 Batch 500 이후 반응시간과 에너지 원단위의 증가 경향을 삽입했습니다. 다음 그래프는 설정된 변화가 데이터에 어떻게 반영되는지 보여줍니다. 보라색 선은 직전 40 Batch의 이동평균입니다.
 
-합성 데이터는 다음 4개 테이블로 나눕니다.
+### 반응시간
 
-```text
-batch_master
-     │
-     ├── material
-     │
-     ├── process_condition
-     │
-     └── quality_result
+![합성 Batch별 반응시간과 40-Batch 이동평균](./02_eda/figures/reaction_time_by_batch.svg)
+
+- Batch 1~500 평균 59.86 → Batch 501~800 평균 62.69 (합성 척도)
+- 차이 +2.82. 생성 규칙에 삽입한 Drift를 시각화한 것이며 실제 공장 이상징후를 탐지한 결과가 아닙니다.
+
+### 에너지 원단위
+
+![합성 Batch별 에너지 원단위와 40-Batch 이동평균](./02_eda/figures/energy_intensity_by_batch.svg)
+
+- Batch 1~500 평균 237.25 → Batch 501~800 평균 248.01 (가상 kWh/t)
+- 차이 +10.76. 실측 유틸리티 원단위나 실제 비용 절감 실적이 아닙니다.
+
+그래프 작성 코드와 데이터 해석은 [02_eda](./02_eda/)를 확인할 수 있습니다.
+
+## 5. 설계 과정에서 내린 판단
+
+1. **데이터 통합 검증**: 1:1 관계를 명시해 중복 키로 인한 행 증폭을 방지했습니다.
+2. **이상값 보존**: IQR 범위를 벗어났다는 이유만으로 관측값을 삭제하지 않았습니다. 제조 데이터에서는 극단값 자체가 점검 신호일 수 있기 때문입니다.
+3. **분석 목적별 출력 분리**: 데이터 품질 문제가 기록된 전체 통합본과 결측값이 없는 분석용 데이터셋을 별도로 유지했습니다.
+4. **재현 가능한 결과**: 난수 생성 규칙과 입력·출력 CSV를 저장하고, 별도의 깨끗한 실행환경에서 결과를 재생성·비교했습니다.
+
+## 6. 실행 및 검증 방법
+
+저장소 루트에서 실행합니다. Python 3.11 및 Pandas 2.2.3 기준으로 GitHub Actions 검증에 성공했습니다. Node.js 20은 SVG 그래프 생성에 사용했습니다.
+
+```bash
+python -m pip install "pandas==2.2.3"
+
+# 합성 원본 데이터 생성
+python 07_manufacturing_extension/generate_synthetic_data.py
+
+# 4개 테이블 통합 및 결측·이상치 점검
+python 07_manufacturing_extension/01_data_integration/integrate_and_validate.py
+
+# 데이터 파이프라인 재현성 검증
+python -m unittest discover -s tests -p "test_manufacturing_reproducibility.py" -v
+
+# SVG 시각화 생성 및 파일 일치 검증 (Node.js 20)
+node 07_manufacturing_extension/02_eda/render_charts.js
+node 07_manufacturing_extension/02_eda/render_charts.js --check
 ```
 
-### batch_master
-Batch 식별과 생산 시점, 사용 설비를 관리합니다.
+자동화 및 증빙:
+- [데이터 생성·통합 테스트 코드](../tests/test_manufacturing_reproducibility.py)
+- [데이터 파이프라인 검증 로그: 4/4 통과](https://github.com/dwk72/knou-data-analysis-manufacturing/actions/runs/41981724270)
+- [시각화 생성 및 재검증: 성공](https://github.com/dwk72/knou-data-analysis-manufacturing/actions/runs/42061282044)
+- [검증 절차·수치·제약 기록](./01_data_integration/REPRODUCIBILITY_VALIDATION_2026-11-05.md)
 
-### material
-원료 LOT와 배합 관련 정보를 관리합니다.
+## 7. 구현 범위와 한계
 
-### process_condition
-Batch별 주요 운전조건을 관리합니다.
+| 구현·검증된 항목 | 아직 구현·검증하지 않은 항목 |
+|---|---|
+| 합성 Batch 데이터 생성 | 실제 설비·제품 데이터에 대한 적용 |
+| 생산·원료·공정·품질 테이블 연결 | 원인 규명 및 실공정 실험 검증 |
+| 결측·IQR 이상값 검토 | 설비·원료 LOT별 심화 교차분석 |
+| 데이터 보존·분리와 요약 보고 | PCA / 품질예측 / SQL 기반 제조 분석 |
+| 공정변수 추세·데이터 품질 시각화 | 실제 개선 전후 성과와 경제성 평가 |
+| 동일 결과 재생성 및 CI 자동 검증 | 타 제조공정으로의 일반화 성능 평가 |
 
-### quality_result
-중간·최종 품질과 수율, 품질판정을 관리합니다.
-
-상세 변수는 [DATA_SCHEMA.md](./DATA_SCHEMA.md)에 정리합니다.
-
----
-
-## 5. Analysis Flow
-
-기존 학업 프로젝트의 분석기법을 아래 순서로 연결합니다.
-
-```text
-1. Data Integration
-      ↓
-2. Data Quality Check / EDA
-      ↓
-3. Multivariate Analysis
-      ↓
-4. Time-Series Analysis
-      ↓
-5. Quality Modeling
-      ↓
-6. Validation
-      ↓
-7. Manufacturing Action
-```
-
-### 1) Data Integration
-Python과 SQL을 이용해 분리된 테이블을 Batch 기준으로 연결합니다.
-
-확인 항목:
-- 중복 Batch
-- 결측치
-- 데이터 타입
-- 비정상 범위
-- 테이블 간 누락 여부
-
-### 2) EDA
-정상 Batch와 이상 Batch가 어떤 점에서 다른지 먼저 확인합니다.
-
-예:
-- 변수별 분포
-- OK / NG 그룹 비교
-- 설비별 품질 차이
-- 원료 LOT별 품질 차이
-- 상관관계
-
-### 3) Multivariate Analysis
-PCA 등을 이용해 여러 공정변수를 동시에 봅니다.
-
-질문:
-- 이상 Batch가 정상 Batch와 다른 공정영역에 위치하는가?
-- 어떤 변수가 그 차이에 크게 기여하는가?
-
-### 4) Time-Series Analysis
-생산 순서에 따라 변수의 변화가 누적되는지 확인합니다.
-
-질문:
-- 특정 공정값이 서서히 이동하는가?
-- 품질 저하 전에 변화가 시작되는가?
-- 반복되는 패턴이 있는가?
-
-### 5) Quality Modeling
-로지스틱 회귀를 기준모델로 사용해 품질판정을 분류합니다.
-
-평가 항목:
-- Accuracy
-- Precision
-- Recall
-- F1
-- Confusion Matrix
-
-복잡한 모델은 기준모델의 한계를 확인한 뒤 필요할 때 추가합니다.
+수치형 변수 간 인과관계와 OK/NG 위험구조는 생성 코드에서 정의한 것입니다. 따라서 이후 데이터에서 해당 관계를 확인해도 실제 공정의 원인을 새로 밝혀냈다는 뜻은 아닙니다. 이 사례는 **제조 데이터의 구조화·품질검증·재현성 확보** 역량을 보여주는 범위로 소개합니다.
 
 ---
 
-## 6. Validation
-
-분석 결과를 그대로 원인으로 해석하지 않습니다.
-
-세 가지 관점에서 검증합니다.
-
-### 데이터 검증
-- 결측·중복·이상치
-- 데이터 범위
-- 테이블 연결 오류
-
-### 통계 검증
-- Train / Test 분리
-- 분류성능 비교
-- 필요 시 통계검정
-- 단순 기준모델과 비교
-
-### 공정 타당성 검토
-통계적으로 관계가 있더라도 공정적으로 설명 가능한지 별도로 확인합니다.
-
-예를 들어 한 변수와 NG가 함께 증가해도 원료 LOT, 설비, 생산시점의 영향을 함께 확인합니다.
-
----
-
-## 7. Manufacturing Action
-
-최종 산출물은 단순한 그래프나 예측값이 아닙니다.
-
-분석 결과를 다음과 같은 **점검 우선순위**로 연결하는 것을 목표로 합니다.
-
-```text
-이상 Batch 확인
-    ↓
-관련 변수 후보
-    ↓
-원료 / 설비 / 공정조건 교차확인
-    ↓
-우선 점검 항목 선정
-    ↓
-추가 데이터 확인 또는 실험
-```
-
-예시:
-
-- 특정 설비에서만 이상이 집중된다면 설비상태와 교정이력을 우선 확인
-- 특정 원료 LOT에서 품질편차가 커진다면 원료 성적과 투입이력을 우선 확인
-- 특정 공정영역에서 NG가 증가한다면 운전조건과 작업기준을 우선 검토
-
-> 데이터 분석은 원인을 자동으로 확정하기 위한 것이 아니라, 현장조사의 탐색 범위를 줄이기 위한 의사결정 지원 수단으로 사용합니다.
-
----
-
-## 8. Current Status
-
-- [x] 제조 Case 정의
-- [x] 분석 목적 정의
-- [x] 초기 가설 설정
-- [x] 데이터 테이블 구조 설계
-- [x] 분석 순서 설계
-- [x] Synthetic 데이터 생성
-- [x] Python 데이터 통합
-- [x] 기초 EDA 시각화 3종 (02_eda: 합성 데이터)
-- [ ] SQL Query 작성
-- [ ] EDA
-- [ ] PCA
-- [ ] Time-Series 분석
-- [ ] Logistic Regression
-- [ ] Validation
-- [ ] Manufacturing Action 정리
-
-데이터 생성 원칙은 [GENERATION_RULES.md](./GENERATION_RULES.md), 실제 생성 결과는 [data](./data/), 데이터 검증 요약은 [VALIDATION_SUMMARY.md](./VALIDATION_SUMMARY.md)에 정리합니다.\n\n첫 분석 단계인 데이터 통합·품질점검은 [01_data_integration](./01_data_integration/)에서 확인할 수 있습니다.
+학업 기반 분석 과제와 다른 복원 코드는 [저장소 첫 화면](../) 및 [복원 기록](../RESTORATION_STATUS.md)을 참고해 주세요.
