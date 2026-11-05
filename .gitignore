@@ -34,3 +34,9 @@ Thumbs.db
 !07_manufacturing_extension/data/*.csv
 
 !07_manufacturing_extension/01_data_integration/output/*.csv
+
+# Restored demos: generated assets and downloaded training data
+02_multivariate_analysis/output/
+05_ml_dl_foundations/data/
+*.pt
+*.pth
