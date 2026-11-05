@@ -226,6 +226,7 @@ PCA 등을 이용해 여러 공정변수를 동시에 봅니다.
 - [x] 분석 순서 설계
 - [x] Synthetic 데이터 생성
 - [x] Python 데이터 통합
+- [x] 기초 EDA 시각화 3종 (02_eda: 합성 데이터)
 - [ ] SQL Query 작성
 - [ ] EDA
 - [ ] PCA
