@@ -1,0 +1,38 @@
+{
+  "cohorts": {
+    "Literature": {
+      "bet_mean_m2_g": 2084.32,
+      "bet_median_m2_g": 2042.9,
+      "bet_missing": 12,
+      "bet_observed": 176,
+      "coverage": {
+        "BET": 176,
+        "DR_volume": 172,
+        "H2_uptake": 0,
+        "NLDFT_micropore": 188
+      },
+      "samples": 188
+    },
+    "MAST3RBoost": {
+      "bet_mean_m2_g": 2942.07,
+      "bet_median_m2_g": 2899.67,
+      "bet_missing": 0,
+      "bet_observed": 49,
+      "coverage": {
+        "BET": 49,
+        "DR_volume": 49,
+        "H2_uptake": 48,
+        "NLDFT_micropore": 0
+      },
+      "samples": 49
+    }
+  },
+  "raw_file_republished": false,
+  "samples": 237,
+  "source_columns": 34,
+  "source_doi": "10.5281/zenodo.23311682",
+  "source_license": "CC BY-ND 2.5",
+  "source_md5": "0e38bd5c6a66dc8ff62f5831a90b55b0",
+  "source_url": "https://zenodo.org/records/23311682",
+  "unique_ids": 237
+}
