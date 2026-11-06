@@ -198,6 +198,10 @@ def get_results(df: pd.DataFrame) -> dict:
         for temp in sorted(df.loc[df.source_group == "Literature", TEMP].dropna().unique())
     ]
     lit_model = fit_ols(lit_primary, LIT_VARS)
+    # Robustness check: expand into sparse 850/900 C conditions, keeping the
+    # exceptional 80 C and unsupported 500 C out of the main sensitivity fit.
+    lit_extended = lit.loc[lit[TEMP].between(600, 900)].copy()
+    lit_sensitivity = fit_ols(lit_extended, LIT_VARS)
     proj_model = fit_ols(project, PROJECT_VARS)
     return {
         "data_source": "https://zenodo.org/records/23311682",
@@ -215,6 +219,7 @@ def get_results(df: pd.DataFrame) -> dict:
                 "N_C": pearson_or_none(lit, N_C),
             },
             "adjusted_model": lit_model,
+            "sensitivity_600_to_900": lit_sensitivity,
             "bootstrap_95": bootstrap_intervals(lit_primary, LIT_VARS),
             "sample_level_repeated_cv": repeated_cv(lit_primary, LIT_VARS),
         },
@@ -228,6 +233,13 @@ def get_results(df: pd.DataFrame) -> dict:
                 "N_C": pearson_or_none(project, N_C),
             },
             "adjusted_model": proj_model,
+            "predictor_pearson_correlations": {
+                name: {
+                    other: round(float(project[name].corr(project[other])), 4)
+                    for other in PROJECT_VARS
+                }
+                for name in PROJECT_VARS
+            },
             "bootstrap_95": bootstrap_intervals(project, PROJECT_VARS, seed=20261107),
             "sample_level_repeated_cv": repeated_cv(project, PROJECT_VARS, seed=1043),
         },
@@ -348,6 +360,11 @@ def report(res: dict) -> str:
         f"반복 5-fold CV 중앙 R²: {lit['sample_level_repeated_cv']['median_cv_r2']:.3f}.",
         f"- CV MAE: 모델 {lit['sample_level_repeated_cv']['median_model_mae']:.2f} m²/g, "
         f"훈련집단 평균 기준모델 {lit['sample_level_repeated_cv']['median_mean_baseline_mae']:.2f} m²/g.",
+        "- 온도 범위를 600–900 °C로 넓힌 민감도 모델("
+        + str(lit["sensitivity_600_to_900"]["n"])
+        + "개 시료)에서 온도 100 °C당 조건부 연관 계수는 "
+        + str(lit["sensitivity_600_to_900"]["coefficients"]["temp_per_100C"])
+        + " m²/g입니다. 이것도 인과효과는 아닙니다.",
         "- 연구별 반복·동일 원료·측정법 구분키가 없으므로 교차검증에서도 연구 간 일반화 성능을 주장할 수 없습니다.",
         "",
         "## 2. MAST3RBoost 시료: 800 °C 고정 조건의 조성 비교",
@@ -362,6 +379,10 @@ def report(res: dict) -> str:
         "",
         "- K/C, O/C, N/C를 사전 지정한 공변량으로 다중회귀를 구성했습니다. "
         "조성 간 동시 변동 때문에 단일 변수의 인과적 기여를 의미하지 않습니다.",
+        "- 주의: O/C는 단순 상관계수에서 음(-)의 방향이지만, "
+        "K/C와 N/C를 통제한 회귀에서는 양(+)의 계수로 부호가 역전됩니다. "
+        "조성변수의 상관·선택된 공변량·생략 요인에 민감할 수 있으므로 "
+        "O/C 증가가 물성을 개선한다고 해석하지 않습니다.",
         "",
         *coef_table(project),
         "",
