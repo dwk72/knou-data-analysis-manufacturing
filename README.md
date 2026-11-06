@@ -34,6 +34,12 @@ University of Nottingham과 Nanolayers의 공개 활성탄 데이터를 사용�
 
 [상세 분석 및 검증 한계 읽기](./carbon_materials_process_quality/02_process_relationships/)
 
+## 다음 단계 제안: 확인실험 계획 수립
+
+[실험 제안서](./carbon_materials_process_quality/03_confirmation_plan/) · [실험조건 12회 설계표](./carbon_materials_process_quality/03_confirmation_plan/results/DESIGN_MATRIX.csv) · [실험 전 판정기준서](./carbon_materials_process_quality/03_confirmation_plan/PRE_RUN_DECISION_TEMPLATE.md)
+
+기존 연구의 K/C·O/C 공변동과 회귀 해석의 한계를 해결하기 위해, 원료 LOT 2개와 K/C 세 수준을 조합한 12회 독립 제조 확인실험을 **계획만** 수립했습니다. 원자료의 K/C 사분위수로 수준을 선정했으며, BET뿐 아니라 제조 수율·잔류물·공정안전을 함께 검토하는 절차를 제안합니다. 실제 제조·측정·품질 개선 실적은 없습니다.
+
 ## 기존 프로젝트 (보존)
 
 ### 화학·배터리 합성 Batch 데이터 통합·품질검증
