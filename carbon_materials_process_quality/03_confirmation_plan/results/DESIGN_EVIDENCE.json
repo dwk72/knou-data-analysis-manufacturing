@@ -1,10 +1,14 @@
 {
+  "K_C_chemical_to_dose_mapping_verified": false,
   "dataset": "University of Nottingham/Nanolayers activated carbon, Zenodo v2",
+  "execution_authorization": "NO_GO_PENDING_FEASIBILITY_AND_SAFETY",
   "expected_bet_analytical_measurements_if_executed": 24,
+  "experiment_power_calculated": false,
   "feedstock_lot_placeholder_count": 2,
   "independent_days": 2,
   "intended_bet_technical_repeats_per_preparation": 2,
   "levels_count": 3,
+  "nominal_residual_degrees_of_freedom_under_fixed_day_lot_interaction_model": 5,
   "preparation_runs": 12,
   "proposed_k_c_levels": {
     "CENTER": 3.322,
