@@ -55,6 +55,11 @@ class ConfirmationPlanTest(unittest.TestCase):
             Counter({(feed, level): 2 for feed in FEEDSTOCKS for level in LEVEL_NAMES}),
         )
         self.assertTrue(all(r["experiment_status"] == "PROPOSED_NOT_EXECUTED" for r in plan))
+        self.assertTrue(all(
+            r["execution_authorization"] == "NO_GO_PENDING_FEASIBILITY_AND_SAFETY"
+            and r["K_C_to_actual_dose_validated"] == "NO"
+            for r in plan
+        ))
 
     def test_no_fabricated_results_in_template(self):
         _, levels = support_levels(self.frame)
@@ -73,6 +78,12 @@ class ConfirmationPlanTest(unittest.TestCase):
             self.assertEqual(evidence["source_cohort_n"], 49)
             self.assertEqual(evidence["expected_bet_analytical_measurements_if_executed"], 24)
             self.assertEqual(evidence["stage"], "NOT_EXECUTED_EXPERIMENT_PROPOSAL")
+            self.assertEqual(evidence["execution_authorization"], "NO_GO_PENDING_FEASIBILITY_AND_SAFETY")
+            self.assertFalse(evidence["K_C_chemical_to_dose_mapping_verified"])
+            self.assertFalse(evidence["experiment_power_calculated"])
+            self.assertEqual(
+                evidence["nominal_residual_degrees_of_freedom_under_fixed_day_lot_interaction_model"], 5
+            )
             data = json.loads((output / "DESIGN_EVIDENCE.json").read_text("utf-8"))
             self.assertEqual(data["proposed_k_c_levels"], {"LOW": 2.946, "CENTER": 3.322, "HIGH": 3.764})
             with (output / "DESIGN_MATRIX.csv").open("r", encoding="utf-8") as file:
