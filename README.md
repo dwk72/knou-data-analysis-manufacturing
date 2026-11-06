@@ -6,7 +6,7 @@
 
 ## 대표 프로젝트: 탄소소재 제조조건·물성 분석
 
-[탄소소재 프로젝트 전체 보기](./carbon_materials_process_quality/) · [실제 공개 데이터 출처](https://zenodo.org/records/23311682) · [분석 코드](./carbon_materials_process_quality/analyze.py) · [검증 결과](./carbon_materials_process_quality/results/REPORT.md)
+[탄소소재 프로젝트 전체 보기](./carbon_materials_process_quality/) · [출처별 공정조건·원료 조성 분석](./carbon_materials_process_quality/02_process_relationships/) · [실제 공개 데이터 출처](https://zenodo.org/records/23311682) · [재현성 검증](https://github.com/dwk72/knou-data-analysis-manufacturing/actions/workflows/carbon_process_relationships.yml)
 
 University of Nottingham과 Nanolayers의 공개 활성탄 데이터를 사용해 원료 조성, 활성화 온도·유지시간, BET 비표면적 등의 관계를 탐색합니다. 실제 회사에서 생산한 데이터가 아닌 연구·문헌 시료 자료이며, 양산 공정의 인과관계나 개선 실적을 주장하지 않습니다.
 
@@ -16,8 +16,8 @@ University of Nottingham과 Nanolayers의 공개 활성탄 데이터를 사용�
 | 자료 구분 | 문헌 시료 188개 / 연구 프로젝트 시료 49개 |
 | 원본 데이터 | 34개 변수, 시료 ID 중복 0건 |
 | BET 측정 | 225개 측정, 12개 미측정 |
-| 분석 내용 | 출처별 측정 커버리지, 활성화 온도–BET 기초 시각화 |
-| 재현성 | 공식 Zenodo v2 CSV MD5 무결성 검사, 자동 테스트 통과 |
+| 분석 내용 | 출처별 측정 커버리지, 온도·원료 조성과 BET 관계 탐색, 회귀·부트스트랩·교차검증 |
+| 재현성 | 원본 MD5 검증, 시료·모형 검증 테스트 및 GitHub Actions 실행 통과 |
 | 공개 범위 | 분석 스크립트·집계 통계·그래프. 원본 CSV는 비배포 |
 
 ![공개 활성탄 연구시료의 활성화 온도와 BET](./carbon_materials_process_quality/results/figures/temperature_vs_bet.svg)
@@ -25,6 +25,14 @@ University of Nottingham과 Nanolayers의 공개 활성탄 데이터를 사용�
 ![공개 연구시료의 출처별 측정값 보유 현황](./carbon_materials_process_quality/results/figures/coverage_by_cohort.svg)
 
 자료 원본의 이용조건은 CC BY-ND 2.5입니다. 코드가 실행될 때 공식 출처에서 원본 파일을 내려받고, 저장소에는 원본 파일 및 수정된 행 단위 데이터를 올리지 않습니다.
+
+## 제조조건 분석의 주요 판단
+
+- 문헌 시료 162개(온도 600·700·800°C)에서 온도와 원료 성분을 함께 고려한 탐색 회귀를 수행했습니다.
+- Nottingham 연구 시료 49개는 모두 800°C이므로, 이 집단에서는 활성화 온도의 영향을 추정할 수 없습니다.
+- K/C와 O/C가 강하게 상관돼 있고 단순 상관과 다중회귀 계수의 부호도 달라집니다. 따라서 데이터의 차이를 제조조건의 인과효과로 단정하지 않았습니다.
+
+[상세 분석 및 검증 한계 읽기](./carbon_materials_process_quality/02_process_relationships/)
 
 ## 기존 프로젝트 (보존)
 
