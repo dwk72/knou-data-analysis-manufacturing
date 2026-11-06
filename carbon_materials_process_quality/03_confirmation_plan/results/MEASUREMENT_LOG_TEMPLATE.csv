@@ -1,0 +1,13 @@
+experiment_id,planned_day,feedstock_lot,K_C_level,K_C_target_dimensionless,K_C_actual_dimensionless,actual_temperature_profile_file,actual_dwell_time_hour,actual_ramp_rate_C_min,feedstock_COA_reference,BET_measurement_1_m2_g,BET_measurement_2_m2_g,DR_pore_volume_cm3_g,isolated_product_mass_g,input_dry_precursor_mass_g,residual_alkali_result_and_unit,quality_measurement_method_revision,deviation_or_issue,run_status
+D1-01,D1,F-A,CENTER,3.322,,,,,,,,,,,,,,NOT_RUN
+D1-02,D1,F-A,HIGH,3.764,,,,,,,,,,,,,,NOT_RUN
+D1-03,D1,F-B,LOW,2.946,,,,,,,,,,,,,,NOT_RUN
+D1-04,D1,F-B,CENTER,3.322,,,,,,,,,,,,,,NOT_RUN
+D1-05,D1,F-A,LOW,2.946,,,,,,,,,,,,,,NOT_RUN
+D1-06,D1,F-B,HIGH,3.764,,,,,,,,,,,,,,NOT_RUN
+D2-01,D2,F-B,HIGH,3.764,,,,,,,,,,,,,,NOT_RUN
+D2-02,D2,F-B,LOW,2.946,,,,,,,,,,,,,,NOT_RUN
+D2-03,D2,F-A,CENTER,3.322,,,,,,,,,,,,,,NOT_RUN
+D2-04,D2,F-A,HIGH,3.764,,,,,,,,,,,,,,NOT_RUN
+D2-05,D2,F-B,CENTER,3.322,,,,,,,,,,,,,,NOT_RUN
+D2-06,D2,F-A,LOW,2.946,,,,,,,,,,,,,,NOT_RUN
