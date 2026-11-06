@@ -77,6 +77,8 @@ def build_matrix(levels: dict, seed: int = RANDOM_SEED):
                 "porogen_indicator_target": "0",
                 "compactivation_indicator_target": "0",
                 "experiment_status": "PROPOSED_NOT_EXECUTED",
+                "execution_authorization": "NO_GO_PENDING_FEASIBILITY_AND_SAFETY",
+                "K_C_to_actual_dose_validated": "NO",
             })
     return rows
 
@@ -149,6 +151,10 @@ def generate(df, output_dir: Path):
         "expected_bet_analytical_measurements_if_executed": 24,
         "random_seed": RANDOM_SEED,
         "stage": "NOT_EXECUTED_EXPERIMENT_PROPOSAL",
+        "execution_authorization": "NO_GO_PENDING_FEASIBILITY_AND_SAFETY",
+        "K_C_chemical_to_dose_mapping_verified": False,
+        "experiment_power_calculated": False,
+        "nominal_residual_degrees_of_freedom_under_fixed_day_lot_interaction_model": 5,
         "qualification": "Quartiles describe observed historical support; not optimized "
                          "recipe targets or independently validated control windows.",
     }
@@ -176,6 +182,7 @@ def main() -> None:
     print("Proposed K/C targets (not process recommendations):",
           evidence["proposed_k_c_levels"])
     print("Independent preparations proposed:", len(rows))
+    print("Experiment execution authorization:", evidence["execution_authorization"])
     print("No experiments were performed and no quality measurements were invented.")
 
 
