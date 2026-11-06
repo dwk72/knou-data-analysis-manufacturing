@@ -1,0 +1,203 @@
+{
+  "MAST3RBoost": {
+    "adjusted_model": {
+      "coefficients": {
+        "K_C": -850.366,
+        "N_C": 3366.2964,
+        "O_C": 2776.9497,
+        "intercept": 4174.526
+      },
+      "mae_in_sample": 210.32,
+      "n": 49,
+      "parameters": 4,
+      "predictors": [
+        "K_C",
+        "O_C",
+        "N_C"
+      ],
+      "r2_in_sample": 0.4871,
+      "rank": 4,
+      "standardized_condition_number": 7.88
+    },
+    "bootstrap_95": {
+      "intervals": {
+        "K_C": [
+          -1320.9122,
+          -350.1148
+        ],
+        "N_C": [
+          1798.7965,
+          4586.6091
+        ],
+        "O_C": [
+          570.2219,
+          4721.1398
+        ],
+        "intercept": [
+          3430.1679,
+          4935.512
+        ]
+      },
+      "method": "pairs bootstrap, 95% percentile interval; observational association only",
+      "requested_repetitions": 600,
+      "valid_repetitions": 600
+    },
+    "n": 49,
+    "sample_level_repeated_cv": {
+      "caution": "Source studies, repeated formulations and provenance groups cannot be independently blocked with the available metadata. Sample-level CV may be optimistic.",
+      "folds": 5,
+      "median_cv_r2": 0.378,
+      "median_mean_baseline_mae": 325.83,
+      "median_model_mae": 231.57,
+      "n_repetitions": 15,
+      "scheme": "15 repetitions of shuffled 5-fold CV, within source cohort"
+    },
+    "temperature_c": 800,
+    "temperature_effect_estimable": false,
+    "unadjusted_pearson_r": {
+      "K_C": -0.4256972746486503,
+      "N_C": 0.5462055089063519,
+      "O_C": -0.4617492729417836
+    }
+  },
+  "data_grain": "research material sample (not a production batch)",
+  "data_source": "https://zenodo.org/records/23311682",
+  "doi": "10.5281/zenodo.23311682",
+  "known_limits": [
+    "Activation temperature is a constant in the 49 MAST3RBoost samples.",
+    "A literature record at 80 C is unusual and is not silently changed.",
+    "500 C and 850 C strata have only 1 and 2 literature records respectively.",
+    "Literature group combines different studies, feedstocks and assays; study-level blocking and causal adjustment are unsupported.",
+    "Correlations and adjusted coefficients are observational, not effects.",
+    "CV at sample grain does not establish out-of-study generalization."
+  ],
+  "literature": {
+    "adjusted_model": {
+      "coefficients": {
+        "K_C": 277.3184,
+        "N_C": 3366.4151,
+        "O_C": -912.4721,
+        "Porogen": 812.471,
+        "intercept": 416.6864,
+        "temp_per_100C": 476.7363
+      },
+      "mae_in_sample": 383.11,
+      "n": 162,
+      "parameters": 6,
+      "predictors": [
+        "temp_per_100C",
+        "K_C",
+        "O_C",
+        "N_C",
+        "Porogen"
+      ],
+      "r2_in_sample": 0.6491,
+      "rank": 6,
+      "standardized_condition_number": 1.65
+    },
+    "all_bet_samples": 176,
+    "bootstrap_95": {
+      "intervals": {
+        "K_C": [
+          171.9348,
+          393.8541
+        ],
+        "N_C": [
+          2626.3164,
+          4087.9089
+        ],
+        "O_C": [
+          -1420.7141,
+          -479.5681
+        ],
+        "Porogen": [
+          640.0873,
+          965.5288
+        ],
+        "intercept": [
+          153.2728,
+          701.0646
+        ],
+        "temp_per_100C": [
+          357.4694,
+          586.8085
+        ]
+      },
+      "method": "pairs bootstrap, 95% percentile interval; observational association only",
+      "requested_repetitions": 600,
+      "valid_repetitions": 600
+    },
+    "primary_common_temperature_values_c": [
+      600.0,
+      700.0,
+      800.0
+    ],
+    "primary_n": 162,
+    "sample_level_repeated_cv": {
+      "caution": "Source studies, repeated formulations and provenance groups cannot be independently blocked with the available metadata. Sample-level CV may be optimistic.",
+      "folds": 5,
+      "median_cv_r2": 0.626,
+      "median_mean_baseline_mae": 721.93,
+      "median_model_mae": 398.71,
+      "n_repetitions": 15,
+      "scheme": "15 repetitions of shuffled 5-fold CV, within source cohort"
+    },
+    "temp_group_summary": [
+      {
+        "mean_bet_m2_g": 2540.29,
+        "median_bet_m2_g": 2540.29,
+        "n_measured_bet": 1,
+        "n_samples": 1,
+        "temperature_c": 80
+      },
+      {
+        "mean_bet_m2_g": 1786.72,
+        "median_bet_m2_g": 1786.72,
+        "n_measured_bet": 1,
+        "n_samples": 1,
+        "temperature_c": 500
+      },
+      {
+        "mean_bet_m2_g": 1409.54,
+        "median_bet_m2_g": 1356.77,
+        "n_measured_bet": 43,
+        "n_samples": 46,
+        "temperature_c": 600
+      },
+      {
+        "mean_bet_m2_g": 1862.13,
+        "median_bet_m2_g": 1924.24,
+        "n_measured_bet": 43,
+        "n_samples": 46,
+        "temperature_c": 700
+      },
+      {
+        "mean_bet_m2_g": 2512.89,
+        "median_bet_m2_g": 2489.87,
+        "n_measured_bet": 76,
+        "n_samples": 82,
+        "temperature_c": 800
+      },
+      {
+        "mean_bet_m2_g": 1485.36,
+        "median_bet_m2_g": 1485.36,
+        "n_measured_bet": 2,
+        "n_samples": 2,
+        "temperature_c": 850
+      },
+      {
+        "mean_bet_m2_g": 2788.16,
+        "median_bet_m2_g": 2714.72,
+        "n_measured_bet": 10,
+        "n_samples": 10,
+        "temperature_c": 900
+      }
+    ],
+    "unadjusted_pearson_r": {
+      "K_C": 0.19895608024235228,
+      "N_C": 0.4215815710388832,
+      "O_C": -0.12139421460159472,
+      "temperature": 0.44275528344015297
+    }
+  }
+}
