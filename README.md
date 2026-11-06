@@ -1,44 +1,30 @@
-# 제조 데이터 포트폴리오 | 탄소소재 · 화학 Batch
+# 제조 데이터 포트폴리오 | 탄소소재 · 화학공정
 
-화학공정·제조 데이터를 Python으로 정리하고, 공정조건과 제품 물성의 관계를 검토하기 위한 개인 포트폴리오입니다.
+화학공정·생산기술 관점에서 데이터를 검증하고, 제조조건과 품질의 관계를 해석해 다음 점검·실험을 설계하는 포트폴리오입니다.
 
-기존 학업·합성 Batch 프로젝트는 삭제하지 않고 아래의 **기존 프로젝트(보존)** 섹션으로 분리했습니다.
+## 대표 사례: 탄소소재 제조조건과 BET 비표면적 분석
 
-## 대표 프로젝트: 탄소소재 제조조건·물성 분석
+> 공개 활성탄 **연구데이터** 분석 · 실제 생산라인 Batch 자료 아님 · 실험 **미실시** · 공정개선 실적 아님
 
-[탄소소재 프로젝트 전체 보기](./carbon_materials_process_quality/) · [출처별 공정조건·원료 조성 분석](./carbon_materials_process_quality/02_process_relationships/) · [실제 공개 데이터 출처](https://zenodo.org/records/23311682) · [재현성 검증](https://github.com/dwk72/knou-data-analysis-manufacturing/actions/workflows/carbon_process_relationships.yml)
+| 제조 관점의 질문 | 확인한 결과 | 엔지니어링 판단 |
+|---|---|---|
+| 데이터의 비교 가능성 | 시료 237개, 문헌 188개 / Nottingham 연구 49개 | 서로 다른 연구·측정값을 같은 공정의 반복으로 취급하지 않음 |
+| 온도와 품질의 관계 | 문헌 600·700·800°C 중 BET 측정 162개 | 다른 원료·연구조건이 섞여 인과효과로 해석하지 않음 |
+| 원료 조성과 물성 | 800°C 고정 연구시료 49개, K/C–O/C 상관 +0.918 | 온도효과 추정 불가. 조성변수의 상호연관과 해석 오류 확인 |
+| 다음 확인 방법 | LOT 2개 × K/C 3수준 × 2일, 제조 12회 **예비 제안** | K/C 투입량 대응·안전·표본수 사전검증 미완료로 **NO-GO** |
 
-University of Nottingham과 Nanolayers의 공개 활성탄 데이터를 사용해 원료 조성, 활성화 온도·유지시간, BET 비표면적 등의 관계를 탐색합니다. 실제 회사에서 생산한 데이터가 아닌 연구·문헌 시료 자료이며, 양산 공정의 인과관계나 개선 실적을 주장하지 않습니다.
+이 프로젝트에서 강조하는 것은 모델의 높은 점수가 아니라, 실제 제조조건 변경 전에 **검증 가능한 데이터·가설·실험 계획과 실행 불가 조건을 구분한 판단**입니다.
 
-| 검증한 항목 | 결과 |
-|---|---|
-| 분석 대상 | 실제 공개 연구자료 237개 활성탄 시료 |
-| 자료 구분 | 문헌 시료 188개 / 연구 프로젝트 시료 49개 |
-| 원본 데이터 | 34개 변수, 시료 ID 중복 0건 |
-| BET 측정 | 225개 측정, 12개 미측정 |
-| 분석 내용 | 출처별 측정 커버리지, 온도·원료 조성과 BET 관계 탐색, 회귀·부트스트랩·교차검증 |
-| 재현성 | 원본 MD5 검증, 시료·모형 검증 테스트 및 GitHub Actions 실행 통과 |
-| 공개 범위 | 분석 스크립트·집계 통계·그래프. 원본 CSV는 비배포 |
+[<escape>1쪽 프로젝트 요약</escape>](./carbon_materials_process_quality/PORTFOLIO_SUMMARY.md) · [탄소소재 분석 상세](./carbon_materials_process_quality/) · [탐색 회귀·시각화](./carbon_materials_process_quality/02_process_relationships/) · [확인실험 제안](./carbon_materials_process_quality/03_confirmation_plan/) · [공학 검토](./carbon_materials_process_quality/03_confirmation_plan/TECHNICAL_REVIEW.md)
 
-![공개 활성탄 연구시료의 활성화 온도와 BET](./carbon_materials_process_quality/results/figures/temperature_vs_bet.svg)
+### 검증 및 자료 출처
 
-![공개 연구시료의 출처별 측정값 보유 현황](./carbon_materials_process_quality/results/figures/coverage_by_cohort.svg)
+- Python·Pandas·Matplotlib, 부트스트랩·반복 교차검증 및 GitHub Actions 자동 재현성 확인
+- 원자료: University of Nottingham / Nanolayers, [Zenodo v2](https://zenodo.org/records/23311682), DOI 10.5281/zenodo.23311682. CC BY-ND 2.5, 원본 CSV 미배포
+- 데이터 기준: 237개 활성탄 연구시료. 양산 수율·에너지 원단위·설비 이력·제품 규격 없음
+- 실험 계획은 승인된 Recipe가 아니며, 실제 제조·측정·품질 개선을 수행하지 않았음
 
-자료 원본의 이용조건은 CC BY-ND 2.5입니다. 코드가 실행될 때 공식 출처에서 원본 파일을 내려받고, 저장소에는 원본 파일 및 수정된 행 단위 데이터를 올리지 않습니다.
-
-## 제조조건 분석의 주요 판단
-
-- 문헌 시료 162개(온도 600·700·800°C)에서 온도와 원료 성분을 함께 고려한 탐색 회귀를 수행했습니다.
-- Nottingham 연구 시료 49개는 모두 800°C이므로, 이 집단에서는 활성화 온도의 영향을 추정할 수 없습니다.
-- K/C와 O/C가 강하게 상관돼 있고 단순 상관과 다중회귀 계수의 부호도 달라집니다. 따라서 데이터의 차이를 제조조건의 인과효과로 단정하지 않았습니다.
-
-[상세 분석 및 검증 한계 읽기](./carbon_materials_process_quality/02_process_relationships/)
-
-## 다음 단계 제안: 확인실험 계획 수립
-
-[실험 제안서](./carbon_materials_process_quality/03_confirmation_plan/) · [실험조건 12회 설계표](./carbon_materials_process_quality/03_confirmation_plan/results/DESIGN_MATRIX.csv) · [실험 전 판정기준서](./carbon_materials_process_quality/03_confirmation_plan/PRE_RUN_DECISION_TEMPLATE.md)
-
-기존 연구의 K/C·O/C 공변동과 회귀 해석의 한계를 해결하기 위해, 원료 LOT 2개와 K/C 세 수준을 조합한 12회 독립 제조 확인실험을 **계획만** 수립했습니다. 원자료의 K/C 사분위수로 수준을 선정했으며, BET뿐 아니라 제조 수율·잔류물·공정안전을 함께 검토하는 절차를 제안합니다. 실제 제조·측정·품질 개선 실적은 없습니다.
+---
 
 ## 기존 프로젝트 (보존)
 
