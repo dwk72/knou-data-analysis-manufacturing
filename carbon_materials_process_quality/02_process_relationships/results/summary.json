@@ -43,6 +43,23 @@
       "valid_repetitions": 600
     },
     "n": 49,
+    "predictor_pearson_correlations": {
+      "K_C": {
+        "K_C": 1.0,
+        "N_C": -0.1981,
+        "O_C": 0.9183
+      },
+      "N_C": {
+        "K_C": -0.1981,
+        "N_C": 1.0,
+        "O_C": -0.4812
+      },
+      "O_C": {
+        "K_C": 0.9183,
+        "N_C": -0.4812,
+        "O_C": 1.0
+      }
+    },
     "sample_level_repeated_cv": {
       "caution": "Source studies, repeated formulations and provenance groups cannot be independently blocked with the available metadata. Sample-level CV may be optimistic.",
       "folds": 5,
@@ -141,6 +158,29 @@
       "median_model_mae": 398.71,
       "n_repetitions": 15,
       "scheme": "15 repetitions of shuffled 5-fold CV, within source cohort"
+    },
+    "sensitivity_600_to_900": {
+      "coefficients": {
+        "K_C": 228.2915,
+        "N_C": 3339.5105,
+        "O_C": -1091.4814,
+        "Porogen": 776.3226,
+        "intercept": 637.555,
+        "temp_per_100C": 444.6868
+      },
+      "mae_in_sample": 389.07,
+      "n": 174,
+      "parameters": 6,
+      "predictors": [
+        "temp_per_100C",
+        "K_C",
+        "O_C",
+        "N_C",
+        "Porogen"
+      ],
+      "r2_in_sample": 0.6455,
+      "rank": 6,
+      "standardized_condition_number": 1.66
     },
     "temp_group_summary": [
       {
