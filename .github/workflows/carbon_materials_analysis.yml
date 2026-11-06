@@ -1,0 +1,49 @@
+name: Carbon materials research data validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "carbon_materials_process_quality/analyze.py"
+      - "carbon_materials_process_quality/requirements.txt"
+      - "tests/test_carbon_materials.py"
+      - ".github/workflows/carbon_materials_analysis.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  analyze-carbon-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install packages
+        run: python -m pip install -r carbon_materials_process_quality/requirements.txt
+      - name: Fetch publisher data and run analysis
+        run: python carbon_materials_process_quality/analyze.py
+      - name: Run validation tests
+        run: python -m unittest discover -s tests -p "test_carbon_materials.py" -v
+      - name: Validate no raw source is committed
+        run: |
+          test ! -f carbon_materials_process_quality/mast3rboost-AC-UON.csv
+          grep -q '"samples": 237' carbon_materials_process_quality/results/summary.json
+      - name: Publish aggregate reports and SVG only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add carbon_materials_process_quality/results/REPORT.md
+          git add carbon_materials_process_quality/results/summary.json
+          git add carbon_materials_process_quality/results/figures/*.svg
+          if git diff --cached --quiet; then
+            echo "Published aggregate results are unchanged."
+          else
+            git commit -m "Publish verified carbon-materials aggregate EDA and figures"
+            git push
+          fi
