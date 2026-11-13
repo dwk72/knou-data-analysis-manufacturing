@@ -11,8 +11,8 @@
 | 03 시계열분석 | 예측방법론 제출 DOCX와 별도 R 원본 파일 | 기존 industrial_production_analysis.R | 입력 원계열·계절조정 엑셀은 GitHub에 없음, 재현 미확인 |
 | 04 회귀·데이터마이닝 | 회귀모형·데이터마이닝 제출 DOCX | 기존 wine_quality_models.R, 추가 mtcars_regression_reconstructed.R | 와인 데이터 원본 없음; mtcars는 R 내장 데이터. 이 환경에는 R 실행기가 없어 새 R 파일 미검증 |
 | 05 머신러닝·딥러닝 | 머신러닝 PDF의 코드 캡처, 딥러닝 제출 DOCX | mnist_reconstructed.py 추가 | 코드 캡처에서 MNIST 네트워크 구조를 재구성. 모델 forward/1 step 오프라인 점검 통과. 실제 MNIST 10 epoch 재학습은 미수행 |
-| 06 데이터베이스 | 데이터베이스시스템 제출 DOCX의 개념 설명·그림 | README 기존 | 원본 SQL 실행 스크립트가 확인되지 않아 새로운 구현을 완료 사실처럼 만들지 않음 |
-| 07 제조 확장 | 공개 합성 제조 Batch 프로젝트 | 생성·통합·품질검증 Python, 원본 CSV 4개·출력 CSV 4개, 시각화 SVG 3개 | GitHub Actions에서 독립 환경 재실행·CSV 비교 4개 테스트 통과, 시각화 재생성 검증 완료. 실제 공정 데이터 검증은 수행하지 않음 |
+| 06 데이터베이스 | 데이터베이스시스템 제출 DOCX의 개념 설명·그림 | README 기존 | 학업 과제 자체의 SQL 실행 근거는 확인되지 않음. 별도 독립 확장으로 07 제조 프로젝트에 SQLite 구현 추가 |
+| 07 제조 확장 | 공개 합성 제조 Batch 프로젝트 | 생성·통합·품질검증 Python, 기초 EDA SVG 3개, SQLite 스키마·JOIN·GROUP BY·CTE·Window Function 제조 KPI 조회 | Python/SQL 재현성 테스트와 시각화 재생성 검증 구성. 실제 공정 데이터·실제 DBMS 운영환경 검증은 수행하지 않음 |
 
 ## 표현 규칙
 
@@ -20,9 +20,9 @@
 2. Iris 데모의 PCA 설명분산을 원래 과제 결과로 소개하지 않습니다.
 3. 제출 머신러닝 과제 PDF에 기재된 MNIST 정확도 97.82%는 과거 결과입니다. 재구성된 코드의 새 실행 결과가 아닙니다.
 4. 와인 품질분석의 학업 보고서 숫자를 현장 적용 성과로 소개하지 않습니다.
-5. 제조 확장 사례는 합성 데이터 기반의 Data Integration & Data Quality 단계까지 완료된 것으로 소개합니다. EDA / 원인검증 / 실제 개선 실적은 주장하지 않습니다.
+5. 제조 확장 사례는 합성 데이터 기반의 생성·통합·품질검증·기초 EDA·SQLite 제조 KPI 조회까지 완료된 것으로 소개합니다. 원인규명 / 실제 개선 실적은 주장하지 않습니다.
 6. 과제 원본이나 개인·학교 식별정보, 승인받지 않은 데이터는 이 공개 저장소에 넣지 않습니다.
 
 ## 인력 채용 포트폴리오 연결
 
-오늘 공개 가능한 독립 제조 사례는 [07 제조 데이터 통합·품질점검](./07_manufacturing_extension/01_data_integration/)입니다. 학업 재구성 스크립트는 기초 역량의 보조 근거로 소개합니다.
+공개 가능한 독립 제조 사례는 [07 제조 Batch 프로젝트](./07_manufacturing_extension/)이며, 데이터 통합·품질점검·기초 EDA와 [SQLite 제조 KPI 분석](./07_manufacturing_extension/03_sql_analysis/)까지 구분해 확인할 수 있습니다. 학업 재구성 스크립트는 기초 역량의 보조 근거로 소개합니다.
