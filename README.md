@@ -30,12 +30,12 @@
 
 ### 화학·배터리 합성 Batch 데이터 통합·품질검증
 
-[기존 제조 Batch 프로젝트](./07_manufacturing_extension/) · [데이터 통합 및 점검](./07_manufacturing_extension/01_data_integration/) · [기초 EDA 시각화](./07_manufacturing_extension/02_eda/)
+[기존 제조 Batch 프로젝트](./07_manufacturing_extension/) · [데이터 통합 및 점검](./07_manufacturing_extension/01_data_integration/) · [기초 EDA 시각화](./07_manufacturing_extension/02_eda/) · [SQL 제조 KPI 분석](./07_manufacturing_extension/03_sql_analysis/)
 
 - 합성 Batch 데이터 800개를 직접 생성하고 원료·공정·생산·품질 정보 4개 테이블로 나누었습니다.
 - Batch ID 기준으로 자료를 연결해 결측·IQR 이상치 후보를 검토했습니다.
 - REVIEW 83개 Batch를 구분하고 원본 800개와 결측 없는 776개 분석용 데이터셋을 보존했습니다.
-- Python 자동 재현성 검사 4개 테스트를 통과했습니다.
+- Python 자동 재현성 검사 4개 테스트를 통과했습니다.\n- SQL로 동일한 Batch 관계를 재구성하고 설비·원료·Drift·이동 NG율 KPI를 조회하도록 확장했습니다.
 - 실측 공장 데이터와 실제 개선 실적은 아닙니다.
 
 기존 프로젝트의 경로와 내용은 유지했습니다. 이전 GitHub 첫 화면 내용도 [LEGACY_README.md](./LEGACY_README.md)에 별도로 보존했습니다.
