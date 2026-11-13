@@ -1,0 +1,4 @@
+equipment_id,batches,avg_energy_kwh_per_ton,energy_rank
+EQ_B,269,244.92,1
+EQ_C,244,240.74,2
+EQ_A,287,238.36,3
