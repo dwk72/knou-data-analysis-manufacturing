@@ -63,3 +63,18 @@ ER 모델링은 실제 데이터베이스를 만들기 전에 **어떤 데이터
 - Batch / LOT별 생산·품질 KPI 조회
 
 즉, 목표는 **공정조건과 품질결과를 같은 LOT/Batch 기준으로 연결할 수 있는 데이터 구조**를 만드는 것입니다.
+
+
+## 독립 제조 SQL 확장
+
+학업 과제 자체에서는 SQL 실행 프로젝트를 확인하지 못했지만, 별도의 제조 확장 프로젝트에서 SQLite를 사용해 실제 쿼리를 구현했습니다.
+
+- [제조 Batch SQL 분석](../07_manufacturing_extension/03_sql_analysis/)
+- Primary Key / Foreign Key
+- JOIN
+- GROUP BY / CASE
+- CTE
+- Window Function / RANK
+- 설비·원료 LOT·Drift·이동 NG율 제조 KPI 조회
+
+이 구현은 합성 제조 데이터를 사용한 독립 확장이며, 기존 데이터베이스 과제의 수행 결과로 소급해 주장하지 않습니다.
