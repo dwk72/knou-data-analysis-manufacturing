@@ -40,3 +40,8 @@ Thumbs.db
 05_ml_dl_foundations/data/
 *.pt
 *.pth
+
+# Local relational database files are reproducible outputs, not source artifacts
+*.db
+*.sqlite
+*.sqlite3
