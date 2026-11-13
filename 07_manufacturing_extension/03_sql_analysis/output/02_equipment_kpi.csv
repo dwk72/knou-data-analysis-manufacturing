@@ -1,0 +1,4 @@
+equipment_id,batches,ng_count,ng_rate_pct,avg_yield_pct,avg_energy_kwh_per_ton
+EQ_A,287,55,19.16,96.4,238.36
+EQ_B,269,48,17.84,96.22,244.92
+EQ_C,244,47,19.26,96.31,240.74
