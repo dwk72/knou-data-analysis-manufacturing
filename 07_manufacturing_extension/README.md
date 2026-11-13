@@ -23,7 +23,7 @@ Python · Pandas · Data Quality · Batch Manufacturing · Reproducibility
 | 시각화 | 반응시간 변화, 에너지 원단위 변화, 검토 대상 분류 |
 | 재현성 검증 | GitHub Actions에서 생성·통합 결과 8개 CSV 비교, 테스트 4/4 통과 |
 
-[통합·품질검증 코드와 상세 보고서](./01_data_integration/) · [시각화 코드 및 해석](./02_eda/) · [자동 재현성 검증 결과](./01_data_integration/REPRODUCIBILITY_VALIDATION_2026-11-05.md)
+[통합·품질검증 코드와 상세 보고서](./01_data_integration/) · [시각화 코드 및 해석](./02_eda/) · [SQL 제조 KPI 분석](./03_sql_analysis/) · [자동 재현성 검증 결과](./01_data_integration/REPRODUCIBILITY_VALIDATION_2026-11-05.md)
 
 ## 2. 데이터 구조와 처리 과정
 
@@ -50,7 +50,7 @@ Python · Pandas · Data Quality · Batch Manufacturing · Reproducibility
 
 - [데이터 생성 코드](./generate_synthetic_data.py): 원료 LOT 효과, 설비 차이, 시간에 따른 Drift, 품질판정 확률, 소량의 결측·극단값을 의도적으로 설정합니다. 난수 시드는 42입니다.
 - [원본 데이터 4개](./data/): 원본은 모두 공개 가능한 합성 CSV입니다.
-- [통합·검증 코드](./01_data_integration/integrate_and_validate.py): Pandas `merge(..., validate="one_to_one")`으로 Batch 단위 결합을 검증합니다.
+- [통합·검증 코드](./01_data_integration/integrate_and_validate.py): Pandas `merge(..., validate="one_to_one")`으로 Batch 단위 결합을 검증합니다.\n- [SQL 분석 코드](./03_sql_analysis/build_and_query.py): 같은 4개 테이블을 SQLite에 적재하고 JOIN·GROUP BY·CTE·Window Function으로 제조 KPI를 조회합니다.
 - [통합 데이터·품질 보고서](./01_data_integration/output/): 결과 CSV 4개와 [품질검증 보고서](./01_data_integration/DATA_QUALITY_REPORT.md)를 공개합니다.
 
 ## 3. 데이터 품질 검증 결과
@@ -130,9 +130,9 @@ node 07_manufacturing_extension/02_eda/render_charts.js --check
 | 합성 Batch 데이터 생성 | 실제 설비·제품 데이터에 대한 적용 |
 | 생산·원료·공정·품질 테이블 연결 | 원인 규명 및 실공정 실험 검증 |
 | 결측·IQR 이상값 검토 | 설비·원료 LOT별 심화 교차분석 |
-| 데이터 보존·분리와 요약 보고 | PCA / 품질예측 / SQL 기반 제조 분석 |
+| 데이터 보존·분리와 요약 보고 | PCA / 품질예측 |
 | 공정변수 추세·데이터 품질 시각화 | 실제 개선 전후 성과와 경제성 평가 |
-| 동일 결과 재생성 및 CI 자동 검증 | 타 제조공정으로의 일반화 성능 평가 |
+| SQL JOIN·집계·CTE·Window Function 제조 KPI 조회 | 타 제조공정으로의 일반화 성능 평가 |\n| 동일 결과 재생성 및 CI 자동 검증 | 실제 DBMS 운영환경·권한·성능 검증 |
 
 수치형 변수 간 인과관계와 OK/NG 위험구조는 생성 코드에서 정의한 것입니다. 따라서 이후 데이터에서 해당 관계를 확인해도 실제 공정의 원인을 새로 밝혀냈다는 뜻은 아닙니다. 이 사례는 **제조 데이터의 구조화·품질검증·재현성 확보** 역량을 보여주는 범위로 소개합니다.
 
